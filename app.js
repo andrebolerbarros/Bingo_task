@@ -29,7 +29,7 @@ function save() { try { localStorage.setItem(KEY, JSON.stringify(tasks)); } catc
 function render() {
   $('count').textContent = tasks.length;
   $('tasks').innerHTML = tasks.length
-    ? tasks.map(t => `<li><div class="txt"><b>${esc(t.title)}</b><small>${esc(t.description || '')}</small></div>` +
+    ? tasks.map(t => `<li class="${t.drawn ? 'drawn' : ''}"><div class="txt"><b>${esc(t.title)}</b><small>${esc(t.description || '')}</small></div>` +
         `<button class="del" data-id="${t.id}" title="Delete">×</button></li>`).join('')
     : '<li class="empty">No tasks yet.</li>';
 }
@@ -115,7 +115,12 @@ $('draw').addEventListener('click', async () => {
   if (!tasks.length) { out.textContent = 'Add a task first.'; return; }
   busy = true; $('draw').disabled = true;
   ball.className = 'ball-out';
-  const pick = tasks[Math.floor(Math.random() * tasks.length)];   // choose up front; animation is theatre
+  let pool = tasks.filter(t => !t.drawn);
+  let newRound = false;
+  if (!pool.length) { tasks.forEach(t => t.drawn = false); pool = tasks; newRound = true; }  // everything drawn: new round
+  const pick = pool[Math.floor(Math.random() * pool.length)];   // choose up front; animation is theatre
+  pick.drawn = true; save(); render();
+  const left = tasks.filter(t => !t.drawn).length;
   $('crank').classList.add('spin'); stir = 1;
   await sleep(2400);
   stir = 0; $('crank').classList.remove('spin');
@@ -123,7 +128,8 @@ $('draw').addEventListener('click', async () => {
   ball.classList.add('fall');
   await sleep(900);
   out.className = 'show';
-  out.innerHTML = `<h3>${esc(pick.title)}</h3><p>${esc(pick.description || '(no description)')}</p>`;
+  out.innerHTML = `<h3>${esc(pick.title)}</h3><p>${esc(pick.description || '(no description)')}</p>` +
+    `<small>${newRound ? 'New round started. ' : ''}${left} left this round</small>`;
   busy = false; $('draw').disabled = false;
 });
 

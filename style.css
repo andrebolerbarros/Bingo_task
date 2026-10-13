@@ -37,3 +37,5 @@ button.big{display:block;margin:12px auto;font-size:1.15rem;padding:12px 28px;fo
 #result h3{margin:0 0 6px;color:var(--accent)}
 #result p{margin:0;white-space:pre-wrap}
 @keyframes pop{from{transform:scale(.7);opacity:0}to{transform:none;opacity:1}}
+#tasks li.drawn .txt{opacity:.45;text-decoration:line-through}
+#result small{display:block;margin-top:8px;color:var(--muted)}
