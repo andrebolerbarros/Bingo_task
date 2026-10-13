@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Task Bingo</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header><h1>🎱 Task Bingo</h1></header>
+<main>
+  <section class="pane" id="pane-submit">
+    <h2>1 · Submit a task</h2>
+    <form id="task-form">
+      <label>Title
+        <input id="title" required maxlength="80" placeholder="e.g. Align the pilot FASTQs">
+      </label>
+      <label>Description
+        <textarea id="desc" rows="5" placeholder="What does 'done' look like?"></textarea>
+      </label>
+      <button type="submit">Add task</button>
+    </form>
+    <button type="button" id="reset" class="link">Reset to toy tasks</button>
+  </section>
+
+  <section class="pane" id="pane-list">
+    <h2>2 · Task list <span id="count" class="badge">0</span></h2>
+    <ul id="tasks"></ul>
+  </section>
+
+  <section class="pane" id="pane-draw">
+    <h2>3 · Draw a task</h2>
+    <div class="machine">
+      <canvas id="cage" width="300" height="300"></canvas>
+      <div class="crank" id="crank"></div>
+      <div class="chute"><div id="drop-ball" class="ball-out"></div></div>
+    </div>
+    <button type="button" id="draw" class="big">Get new task!</button>
+    <div id="result" aria-live="polite"></div>
+  </section>
+</main>
+<script src="app.js"></script>
+</body>
+</html>
