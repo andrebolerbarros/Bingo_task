@@ -91,12 +91,13 @@ def draw_task(machine, drop):
         machine.markdown(machine_frame(), unsafe_allow_html=True)
         time.sleep(0.1)
     machine.markdown(machine_frame(spinning=False), unsafe_allow_html=True)
-    drop.markdown(f'<div style="text-align:center;font-size:2rem">🎱</div>', unsafe_allow_html=True)
+    drop.markdown('<div style="height:40px;text-align:center;font-size:2rem">🎱</div>', unsafe_allow_html=True)
     time.sleep(0.8)
     pick["drawn"] = True
     save()
     left = sum(not t["drawn"] for t in tasks)
     st.session_state.result = {"task": pick, "left": left, "new_round": new_round}
+    st.rerun()  # the list was rendered before the draw; rerun so the drawn task greys out
 
 
 st.set_page_config(page_title="Task Bingo", page_icon="🎱", layout="wide")
@@ -134,6 +135,7 @@ with col_draw:
     machine = st.empty()
     machine.markdown(machine_frame(spinning=False), unsafe_allow_html=True)
     drop = st.empty()
+    drop.markdown('<div style="height:40px"></div>', unsafe_allow_html=True)  # reserve space so the button doesn't jump
     if st.button("Get new task!", type="primary", use_container_width=True):
         if st.session_state.tasks:
             draw_task(machine, drop)
