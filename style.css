@@ -20,7 +20,6 @@ button.big{display:block;margin:12px auto;font-size:1.15rem;padding:12px 28px;fo
 #tasks .txt{flex:1}
 #tasks b{display:block}
 #tasks small{color:var(--muted)}
-#tasks .del{background:none;color:var(--muted);padding:0 6px;font-size:1.2rem}
 #tasks .empty{color:var(--muted);border:0}
 .machine{position:relative;width:300px;max-width:100%;margin:0 auto;padding-bottom:50px}
 #cage{width:100%;height:auto;display:block}

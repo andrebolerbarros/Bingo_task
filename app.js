@@ -30,7 +30,6 @@ function render() {
   $('count').textContent = tasks.length;
   $('tasks').innerHTML = tasks.length
     ? tasks.map(t => `<li class="${t.drawn ? 'drawn' : ''}"><div class="txt"><b>${esc(t.title)}</b><small>${esc(t.description || '')}</small></div>` +
-        `<button class="del" data-id="${t.id}" title="Delete">×</button>` +
         `<input type="checkbox" class="fin" data-id="${t.id}" title="Mark finished (removes it)"></li>`).join('')
     : '<li class="empty">No tasks yet.</li>';
 }
@@ -43,7 +42,7 @@ $('task-form').addEventListener('submit', e => {
 });
 $('tasks').addEventListener('click', e => {
   const id = e.target.dataset.id;
-  if (!id || !(e.target.classList.contains('del') || e.target.classList.contains('fin'))) return;
+  if (!id || !e.target.classList.contains('fin')) return;
   tasks = tasks.filter(t => String(t.id) !== id);
   save(); render();
 });
